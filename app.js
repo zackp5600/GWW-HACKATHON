@@ -23,7 +23,7 @@ const upload = multer({ storage: storage });
 
 // Serve static files from the 'src' folder
 app.use(express.static(path.join(__dirname, 'src')));
-app.get("/",(req,res)=>{
+app.get("/quizzes",(req,res)=>{
     try{
         res.write(fs.readFileSync("src/index.html"));
         res.end();
