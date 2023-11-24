@@ -25,7 +25,7 @@ const upload = multer({ storage: storage });
 app.use(express.static(path.join(__dirname, 'src')));
 app.get("/quizzes",(req,res)=>{
     try{
-        res.write(fs.readFileSync("src/index.html"));
+        res.write(fs.readFileSync("src/quiz.html"));
         res.end();
     }catch{
         res.write("REFRESH");

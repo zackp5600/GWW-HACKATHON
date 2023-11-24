@@ -1,19 +1,41 @@
-// const { OpenAI } = require('openai');
+const apiKey = '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'
+const apiUrl = 'https://api.openai.com/v1/engines/davinci-codex/completions';
 
-// require('dotenv').config();
 
-// const apiKey = process.env.OPENAI_KEY;
-// const openai = new OpenAI({apiKey: apiKey});
+const headers = {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${apiKey}`,
+};
 
-async function rewordQuestion(question) {
-  const completion = await openai.chat.completions.create({
-    messages: [{"role": "system", "content": "You are a helpful assistant that will create similar questions to the one provided."},
-        {"role": "user", "content": "Make one question similar to this one:".concat(question, "Only output the question, do not say anything else.")}],
-    model: "gpt-3.5-turbo",
-  });
+const prompt = 'Translate the following English text to French:';
 
-  console.log(completion.choices[0]);
+const requestBody = {
+    prompt: prompt,
+    max_tokens: 100,
+};
+function chatgpt(){
+  var input = document.getElementById("input")
+  var value = input.value;
+
+  fetch(apiUrl, {
+    method: 'POST',
+    headers: headers,
+    body: JSON.stringify(requestBody),
+  })
+  .then(response => response.json())
+  .then(data => console.log(data))
+  .catch(error => console.error('Error:', error));
+
+  var output = document.getElementById("output");
+
+  output = value;
+
 }
+
+
+
+
+
 
 function loadPage(pageNumber) {
   // Your code to load the corresponding page goes here
