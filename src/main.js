@@ -5,52 +5,48 @@
 // const apiKey = process.env.OPENAI_KEY;
 // const openai = new OpenAI({apiKey: apiKey});
 
-// async function main() {
-//   const completion = await openai.chat.completions.create({
-//     messages: [{"role": "system", "content": "You are a helpful assistant."},
-//         {"role": "user", "content": "Who won the world series in 2020?"},
-//         {"role": "assistant", "content": "The Los Angeles Dodgers won the World Series in 2020."},
-//         {"role": "user", "content": "Where was it played?"}],
-//     model: "gpt-3.5-turbo",
-//   });
-
-//   console.log(completion.choices[0]);
-// }
-// main();
-
-async function sendMessage() {
-  const inputText = document.getElementById("inputText").value;
-
-  const responseElement = document.getElementById("response");
-  responseElement.innerHTML = "Loading...";
-
-  const apiKey = "OPENAI_KEY"; // Replace with your OpenAI API key
-
-  const apiUrl = "https://api.openai.com/v1/engines/davinci-codex/completions"; // Change to the appropriate engine and endpoint
-
-  const headers = {
-  'Content-Type': 'application/json',
-  'Authorization': `Bearer ${apiKey}`,
-  };
-
-  const requestBody = {
-  prompt: inputText,
-  max_tokens: 64,
-  };
-
-  try {
-  const response = await fetch(apiUrl, {
-      method: 'POST',
-      headers: headers,
-      body: JSON.stringify(requestBody),
+async function rewordQuestion(question) {
+  const completion = await openai.chat.completions.create({
+    messages: [{"role": "system", "content": "You are a helpful assistant that will create similar questions to the one provided."},
+        {"role": "user", "content": "Make one question similar to this one:".concat(question, "Only output the question, do not say anything else.")}],
+    model: "gpt-3.5-turbo",
   });
 
-  const responseData = await response.json();
-  const generatedText = responseData.choices[0].text;
+  console.log(completion.choices[0]);
+}
 
-  responseElement.innerHTML = generatedText;
-  } catch (error) {
-  console.error('Error:', error);
-  responseElement.innerHTML = "An error occurred.";
+function uploadPDF() {
+  // Get the file input element
+  var fileInput = document.getElementById('fileInput');
+
+  // Check if any file is selected
+  if (fileInput.files.length > 0) {
+      // Get the selected file
+      var file = fileInput.files[0];
+
+      // Check if the selected file is a PDF
+      if (file.type === 'application/pdf') {
+          // Create a FormData object to append the file
+          var formData = new FormData();
+          formData.append('pdfFile', file);
+
+          // You can use XMLHttpRequest or fetch to send the file to the server
+          // Here's an example using fetch:
+          fetch('your-upload-endpoint', {
+              method: 'POST',
+              body: formData
+          })
+          .then(response => response.json())
+          .then(data => {
+              console.log('File uploaded successfully:', data);
+          })
+          .catch(error => {
+              console.error('Error uploading file:', error);
+          });
+      } else {
+          alert('Please select a PDF file.');
+      }
+  } else {
+      alert('Please choose a file to upload.');
   }
-  }
+}
