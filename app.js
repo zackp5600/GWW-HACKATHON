@@ -15,6 +15,15 @@ app.get("/quizzes",(req,res)=>{
         res.write("REFRESH");
     }
 });
+
+app.get("/home", (req, res)=>{
+  try{
+    res.write(fs.readFileSync("src/index.html"));
+    res.end();
+  }catch{
+    res.write("REFRESH");
+}
+});
 app.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);
 });
