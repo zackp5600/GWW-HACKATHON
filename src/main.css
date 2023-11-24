@@ -163,8 +163,17 @@ body {
     width: 75px;
     height: 25px;
     border-radius: 53px;
+    font-weight: 700;
     border: 1px solid #FFC800;
     background: linear-gradient(180deg, #FFC800 0%, #FF6400 100%);
+    font-family: DM Sans;
+    color: #FFF;
+    cursor: pointer;
+    transition: .2s all ease-in-out;
+}
+
+#submit-btn:hover {
+    transform: scale(1.1);
 }
 
 #delete-btn {
