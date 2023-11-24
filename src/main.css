@@ -111,6 +111,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    transition: .2s all ease-in-out;
 }
 
 .file > #title {
@@ -136,8 +137,37 @@ body {
     margin-left:10px;
 }
 
+#icons-btn {
+    display: flex;
+    justify-content: right;
+}
+
+.icon {
+    width: 25px;
+    height: 25px;
+    background: none;
+    margin-right:10px;
+    background-size: contain;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    transition: .2s all ease-in-out;
+}
+
 #edit-btn {
-    width: 50px;
-    height: 50px;
-    background-image: url("");
+    background-image: url("edit.svg");
+}
+
+#delete-btn {
+    background-image: url("trash.svg");
+}
+
+.icon:hover {
+    transform: scale(1.1);
+}
+
+#nav-bar {
+    position: absolute;
+    left: 0;
+    top: 0;
 }
