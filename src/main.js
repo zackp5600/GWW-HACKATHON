@@ -5,15 +5,13 @@ require('dotenv').config();
 const apiKey = process.env.OPENAI_KEY;
 const openai = new OpenAI({apiKey: apiKey});
 
-async function main() {
+async function rewordQuestion() {
   const completion = await openai.chat.completions.create({
-    messages: [{"role": "system", "content": "You are a helpful assistant."},
-        {"role": "user", "content": "Who won the world series in 2020?"},
-        {"role": "assistant", "content": "The Los Angeles Dodgers won the World Series in 2020."},
-        {"role": "user", "content": "Where was it played?"}],
+    messages: [{"role": "system", "content": "You are an assistant that helps reword homework questions for teachers."},
+        {"role": "user", "content": "Without saying anything extra, reword this question:"}],
     model: "gpt-3.5-turbo",
   });
 
   console.log(completion.choices[0]);
 }
-main();
+// main();
