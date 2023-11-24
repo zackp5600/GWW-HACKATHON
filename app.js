@@ -1,23 +1,12 @@
-//EXPRESS//
-
 const express = require('express');
+const path = require('path');
+
 const app = express();
+const port = 3000;
 
-//FILE SYSTEM//
-const fs = require('fs');
+// Serve static files from the 'src' folder
+app.use(express.static(path.join(__dirname, 'src')));
 
-//IMPLEMENT STATIC SOURCES//
-app.use(express.static('src'));
-
-app.get('/', (req, res)=>{
-    try{
-        res.write(fs.readFileSync('src/index.html'));
-    }catch{
-        res.write('REFRESH PAGE.');
-    }
-});
-
-//LISTEN ON PORT 80//
-app.listen(80,()=>{
-    console.log('listening on port 80');
+app.listen(port, () => {
+  console.log(`Server is running at http://localhost:${port}`);
 });
