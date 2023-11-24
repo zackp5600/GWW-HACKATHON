@@ -15,6 +15,13 @@ async function rewordQuestion(question) {
   console.log(completion.choices[0]);
 }
 
+function loadPage(pageNumber) {
+  // Your code to load the corresponding page goes here
+  console.log("Loading Page " + pageNumber);
+  // You can replace the console.log statement with the actual logic to load the page
+}
+
+
 function uploadPDF() {
   // Get the file input element
   var fileInput = document.getElementById('fileInput');
@@ -32,9 +39,9 @@ function uploadPDF() {
 
           // You can use XMLHttpRequest or fetch to send the file to the server
           // Here's an example using fetch:
-          fetch('your-upload-endpoint', {
-              method: 'POST',
-              body: formData
+          fetch('http://localhost:3000/upload', {
+            method: 'POST',
+            body: formData
           })
           .then(response => response.json())
           .then(data => {
