@@ -125,6 +125,8 @@ body {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     margin-left:10px;
+    outline: none;
+    border: none;
 }
 
 #paragraph {
@@ -135,6 +137,8 @@ body {
     font-weight: 400;
     line-height: normal;
     margin-left:10px;
+    outline: none;
+    border: none;
 }
 
 #icons-btn {
@@ -154,8 +158,13 @@ body {
     transition: .2s all ease-in-out;
 }
 
-#edit-btn {
-    background-image: url("edit.svg");
+#submit-btn {
+    margin-right: 20px;
+    width: 75px;
+    height: 25px;
+    border-radius: 53px;
+    border: 1px solid #FFC800;
+    background: linear-gradient(180deg, #FFC800 0%, #FF6400 100%);
 }
 
 #delete-btn {
