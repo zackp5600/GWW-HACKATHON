@@ -11,7 +11,7 @@ app.use(express.static(''));
 
 app.get('/', (req, res)=>{
     try{
-        res.write(fs.readFileSync(''));
+        res.write(fs.readFileSync('src/index.html'));
     }catch{
         res.write('REFRESH PAGE.');
     }
