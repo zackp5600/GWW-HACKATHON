@@ -1,19 +1,12 @@
-const { OpenAI } = require('openai');
+const express = require('express');
+const path = require('path');
 
-require('dotenv').config();
+const app = express();
+const port = 3000;
 
-const apiKey = process.env.OPENAI_KEY;
-const openai = new OpenAI({apiKey: apiKey});
+// Serve static files from the 'src' folder
+app.use(express.static(path.join(__dirname, 'src')));
 
-async function main() {
-  const completion = await openai.chat.completions.create({
-    messages: [{"role": "system", "content": "You are a helpful assistant."},
-        {"role": "user", "content": "Who won the world series in 2020?"},
-        {"role": "assistant", "content": "The Los Angeles Dodgers won the World Series in 2020."},
-        {"role": "user", "content": "Where was it played?"}],
-    model: "gpt-3.5-turbo",
-  });
-
-  console.log(completion.choices[0]);
-}
-main();
+app.listen(port, () => {
+  console.log(`Server is running at http://localhost:${port}`);
+});
