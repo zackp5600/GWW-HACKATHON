@@ -7,7 +7,7 @@ const app = express();
 const fs = require('fs');
 
 //IMPLEMENT STATIC SOURCES//
-app.use(express.static(''));
+app.use(express.static('src'));
 
 app.get('/', (req, res)=>{
     try{
