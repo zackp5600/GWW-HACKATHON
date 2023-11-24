@@ -1,40 +1,54 @@
 //EXPRESS//
 
-const express = require('express');
+const express = require("express");
+require("dotenv").config();
+const { Configuration, OpenAIApi } = require("openai");
+
 const app = express();
 
-//FILE SYSTEM//
-const fs = require('fs');
+app.use(express.json());
 
-//IMPLEMENT STATIC SOURCES//
-app.use(express.static('src'));
+const configuration = new Configuration({
+  apiKey: process.env.OPEN_AI_KEY,
+});
+const openai = new OpenAIApi(configuration);
 
-app.get('/', (req, res)=>{
-    try{
-        res.write(fs.readFileSync('src/index.html'));
-    }catch{
-        res.write('REFRESH PAGE.');
-    }
+app.post("/find-complexity", async (req, res) => {
+  try {
+    const { prompt } = req.body;
+    const response = await openai.createCompletion({
+      model: "text-davinci-003",
+      prompt: `
+              ${prompt}
+      
+              The time complexity of this function is
+              ###
+            `,
+      max_tokens: 64,
+      temperature: 0,
+      top_p: 1.0,
+      frequency_penalty: 0.0,
+      presence_penalty: 0.0,
+      stop: ["\n"],
+    });
+
+    return res.status(200).json({
+      success: true,
+      data: response.data.choices[0].text,
+    });
+  } catch (error) {
+    return res.status(400).json({
+      success: false,
+      error: error.response
+        ? error.response.data
+        : "There was an issue on the server",
+    });
+  }
 });
 
+const port = process.env.PORT || 5000;
 
-import OpenAI from "openai";
-
-const openai = new OpenAI();
-
-async function generateSimilarQuestionFunction(question) {
-  const completion = await openai.chat.completions.create({
-    messages: [{"role": "system", "content": "You are a helpful assistant that will create similar questions to the one provided."},
-        {"role": "user", "content": "Make one question similar to this one:".concat(question, "Only output the question, do not say anything else.")}],
-    model: "gpt-3.5-turbo",
-  });
-
-  console.log(completion.choices[0]);
-}
-generateSimilarQuestionFunction("Joe has 5 apples. If Amy takes two, how many does he have?");
-
-document.getElementById("")
-
+app.listen(port, () => console.log(`Server listening on port ${port}`));
 
 //LISTEN ON PORT 80//
 app.listen(80,()=>{
