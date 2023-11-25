@@ -15,7 +15,7 @@ function chatgpt() {
     console.log(value);
     const requestBody = {
         prompt: "You are a helpful chat assistant. Make a similar question that is related to this question. Do not add any extra information:".concat(value),
-        max_tokens: 100 ,
+        max_tokens: 100,
         // temperature: 0.2,
         // // model: "gpt-3.5-turbo",
         // model: "gpt-3.5-turbo"
