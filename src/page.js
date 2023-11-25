@@ -1,8 +1,7 @@
 document.addEventListener("DOMContentLoaded",()=>{
-    for(var i=0;i<document.getElementsByClassName("file").length;i++){
-
-    }
-    document.getElementById('new-btn').addEventListener('click',()=>{
-        
+    var template = document.getElementById('template').cloneNode(true);
+    document.getElementById("new-btn").addEventListener("click",()=>{
+        document.getElementById("files").appendChild(template);
+        template = template.cloneNode(true);
     });
 });
