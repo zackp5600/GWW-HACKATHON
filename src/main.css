@@ -136,6 +136,7 @@ body {
     margin-left:10px;
     outline: none;
     border: none;
+    overflow-y: scroll;
 }
 
 .paragraph {
