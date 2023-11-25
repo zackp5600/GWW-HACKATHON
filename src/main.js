@@ -1,81 +1,46 @@
-const apiKey = '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'
-const apiUrl = 'https://api.openai.com/v1/engines/davinci-codex/completions';
-
+const apiKey = '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';
+const apiUrl = 'https://api.openai.com/v1/engines/davinci/completions';
 
 const headers = {
     'Content-Type': 'application/json',
     'Authorization': `Bearer ${apiKey}`,
 };
 
-const prompt = 'Translate the following English text to French:';
+function chatgpt() {
+    console.log("hello");
+    var input = document.getElementById("title");
+    var value = input.innerHTML;
 
-const requestBody = {
-    prompt: prompt,
-    max_tokens: 100,
-};
-function chatgpt(){
-  var input = document.getElementById("input")
-  var value = input.value;
+    // Update the requestBody with the user's input
+    console.log(value);
+    const requestBody = {
+        prompt: "You are a helpful chat assistant. Make a similar question that is related to this question. Do not add any extra information:".concat(value),
+        max_tokens: 100 ,
+        // temperature: 0.2,
+        // // model: "gpt-3.5-turbo",
+        // model: "gpt-3.5-turbo"
 
-  fetch(apiUrl, {
-    method: 'POST',
-    headers: headers,
-    body: JSON.stringify(requestBody),
-  })
-  .then(response => response.json())
-  .then(data => console.log(data))
-  .catch(error => console.error('Error:', error));
+    };
 
-  var output = document.getElementById("output");
+    var output = document.getElementById("paragraph");
 
-  output = value;
-
+    fetch(apiUrl, {
+        method: 'POST',
+        headers: headers,
+        body: JSON.stringify(requestBody),
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log(data.choices[0]);
+        // Update the output element with the generated text
+        output.innerHTML = data.choices[0].text;
+    })
+    .catch(error => console.error('Error:', error));
 }
-
-
-
-
 
 
 function loadPage(pageNumber) {
   // Your code to load the corresponding page goes here
   console.log("Loading Page " + pageNumber);
   // You can replace the console.log statement with the actual logic to load the page
-}
-
-
-function uploadPDF() {
-  // Get the file input element
-  var fileInput = document.getElementById('fileInput');
-
-  // Check if any file is selected
-  if (fileInput.files.length > 0) {
-      // Get the selected file
-      var file = fileInput.files[0];
-
-      // Check if the selected file is a PDF
-      if (file.type === 'application/pdf') {
-          // Create a FormData object to append the file
-          var formData = new FormData();
-          formData.append('pdfFile', file);
-
-          // You can use XMLHttpRequest or fetch to send the file to the server
-          // Here's an example using fetch:
-          fetch('http://localhost:3000/upload', {
-            method: 'POST',
-            body: formData
-          })
-          .then(response => response.json())
-          .then(data => {
-              console.log('File uploaded successfully:', data);
-          })
-          .catch(error => {
-              console.error('Error uploading file:', error);
-          });
-      } else {
-          alert('Please select a PDF file.');
-      }
-  } else {
-      alert('Please choose a file to upload.');
-  }
 }
