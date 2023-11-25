@@ -23,6 +23,14 @@ const upload = multer({ storage: storage });
 
 // Serve static files from the 'src' folder
 app.use(express.static(path.join(__dirname, 'src')));
+app.get("/",(req,res)=>{
+    try{
+        res.write(fs.readFileSync("src/quiz.html"));
+        res.end();
+    }catch{
+        res.write("REFRESH");
+    }
+});
 app.get("/quizzes",(req,res)=>{
     try{
         res.write(fs.readFileSync("src/quiz.html"));
@@ -31,7 +39,6 @@ app.get("/quizzes",(req,res)=>{
         res.write("REFRESH");
     }
 });
-
 app.post('/upload', upload.single('pdfFile'), (req, res) => {
   // Assuming you want to send a response back to the client
   res.json({ message: 'File uploaded successfully!' });
